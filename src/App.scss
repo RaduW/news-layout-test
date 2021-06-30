@@ -1,38 +1,58 @@
+$left-panel-width: 20em;
 .App {
+  background-color: aliceblue;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: $left-panel-width 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.Toolbar {
+  grid-column-start: 1;
+  grid-column-end: span 2;
+
+  display:grid;
+  grid-template-columns: $left-panel-width 1fr 1fr 1fr;
   text-align: center;
+  grid-column-gap: 3em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.ControlPanel {
+  background-color: #eeffff;
+  overflow-y: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.button {
+  cursor: pointer;
+  background-color: #eee;
+  &:hover{
+    background-color: #ccc;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.button-container{
 }
 
-.App-link {
-  color: #61dafb;
+.small-button {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #eee;
+  margin: 0.2em 0.5em;
+  padding: 1px 4px;
+  &:hover{
+    background-color: #ccc;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.button.active, .small-button.active{
+  border: thin black solid;
 }
+
+
+.GridPanel {
+  background-color: white;
+  overflow-y: auto;
+}
+
