@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, {useState} from 'react'
 import './App.scss'
 
 type ElementType = "article" | "sports" | "important" | "ad" | "references"
@@ -14,10 +14,12 @@ interface AppState {
 
 }
 
-function initialAppState():AppState{
+function initialAppState(): AppState {
 
-    const elements = new Array<DisplayElement>(40).fill({type: "article", id:""}).map(
-        (elm,idx) => {  return {type:"article", id:`${idx}`} as DisplayElement}
+    const elements = new Array<DisplayElement>(40).fill({type: "article", id: ""}).map(
+        (elm, idx) => {
+            return {type: "article", id: `${idx + 1}`} as DisplayElement
+        }
     )
     return {
         columns: 3,
@@ -27,7 +29,7 @@ function initialAppState():AppState{
 
 export function App() {
     const [state, setState]: [AppState, (state: AppState) => void] = useState(initialAppState());
-    const setColumns = (columns: number) => setState({...state , columns})
+    const setColumns = (columns: number) => setState({...state, columns})
     return (
         <div className="App">
             <Toolbar columns={state.columns} setColumns={setColumns}/>
@@ -37,12 +39,12 @@ export function App() {
     )
 }
 
-interface ControlPanelProps{
+interface ControlPanelProps {
     elements: DisplayElement[]
 }
 
-function ControlPanel(props: ControlPanelProps){
-    const elements = props.elements.map( (elm)=>
+function ControlPanel(props: ControlPanelProps) {
+    const elements = props.elements.map((elm) =>
         <ElementController elm={elm}/>
     )
     return (<div className="ControlPanel">
@@ -50,17 +52,26 @@ function ControlPanel(props: ControlPanelProps){
     </div>)
 }
 
-interface GridPanelProps{
+interface GridPanelProps {
     columns: number
     elements: DisplayElement[]
 }
 
-function GridPanel(props: GridPanelProps){
-    const elements = props.elements.map( (_elm)=>
-        <div>Hello</div>
-    )
+function GridPanel(props: GridPanelProps) {
+    const elements = props.elements.map((elm) => GridItem(elm))
+
+    const numCols = props.columns;
+    const gridType = numCols === 3 ? "three-columns" : numCols === 2 ? "two-columns" : "one-column";
     return (<div className="GridPanel">
-        {elements}
+        <div className={`the-grid ${gridType}`}>
+            {elements}
+        </div>
+    </div>)
+}
+
+function GridItem(props: DisplayElement) {
+    return (<div className={`item ${props.type}`}>
+        {`${props.id} ${props.type}`}
     </div>)
 }
 
@@ -95,23 +106,24 @@ function ColumnsButton(props: ColumnsButtonProps) {
     )
 }
 
-interface ElementControllerProps{
+interface ElementControllerProps {
     elm: DisplayElement
 }
-function ElementController(props: ElementControllerProps){
-    const art_active = props.elm.type === 'article' ? "active": ""
-    const sp_active = props.elm.type === 'sports' ? "active": ""
-    const imp_active = props.elm.type === 'important' ? "active": ""
-    const ad_active = props.elm.type === 'ad' ? "active": ""
-    const ref_active = props.elm.type === 'references' ? "active": ""
+
+function ElementController(props: ElementControllerProps) {
+    const art_active = props.elm.type === 'article' ? "active" : ""
+    const sp_active = props.elm.type === 'sports' ? "active" : ""
+    const imp_active = props.elm.type === 'important' ? "active" : ""
+    const ad_active = props.elm.type === 'ad' ? "active" : ""
+    const ref_active = props.elm.type === 'references' ? "active" : ""
     return (
         <div className='button-container'>
+            <span className="item-name">{props.elm.id}</span>
             <span className={`small-button ${art_active}`}>art</span>
             <span className={`small-button ${sp_active}`}>sp</span>
             <span className={`small-button ${imp_active}`}>imp</span>
             <span className={`small-button ${ad_active}`}>ad</span>
             <span className={`small-button ${ref_active}`}>ref</span>
-            <span className="id">{props.elm.id}</span>
         </div>
     )
 }
