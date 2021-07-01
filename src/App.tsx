@@ -16,7 +16,7 @@ interface AppState {
 
 function initialAppState(): AppState {
 
-    const elements = new Array<DisplayElement>(40).fill({type: "article", id: ""}).map(
+    const elements = new Array<DisplayElement>(70).fill({type: "article", id: ""}).map(
         (elm, idx) => {
             return {type: "article", id: `${idx + 1}`} as DisplayElement
         }
