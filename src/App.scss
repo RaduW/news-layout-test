@@ -84,15 +84,17 @@ $left-panel-width: 20em;
   .article{
   }
   .sports{
+    grid-row-end: span 3;
   }
   .important{
+    grid-row-end: span 4;
   }
   .ad{
+    grid-row-end: span 2;
   }
   .references{
+    grid-row-end: span 3;
   }
-
-
 }
 
 .two-columns{
@@ -109,11 +111,12 @@ $left-panel-width: 20em;
     grid-row-end: span 2;
   }
   .ad{
-    grid-row-end: span 2;
-    grid-column-start: 2;
+    grid-column-end: span 2;
 
   }
   .references{
+    grid-column-end: span 2;
+    grid-row-end: span 3;
   }
 
 }
@@ -124,7 +127,7 @@ $left-panel-width: 20em;
   }
   .sports{
     grid-column-end: span 2;
-    grid-row-end: span 2;
+    grid-row-end: span 4;
     grid-column-start: 1;
   }
   .important{
