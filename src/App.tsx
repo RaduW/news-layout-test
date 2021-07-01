@@ -119,11 +119,11 @@ function ElementController(props: ElementControllerProps) {
     return (
         <div className='button-container'>
             <span className="item-name">{props.elm.id}</span>
-            <span className={`small-button ${art_active}`}>art</span>
-            <span className={`small-button ${sp_active}`}>sp</span>
-            <span className={`small-button ${imp_active}`}>imp</span>
-            <span className={`small-button ${ad_active}`}>ad</span>
-            <span className={`small-button ${ref_active}`}>ref</span>
+            <span className={`small-button ${art_active} article`}>art</span>
+            <span className={`small-button ${sp_active} sports`}>sp</span>
+            <span className={`small-button ${imp_active} important`}>imp</span>
+            <span className={`small-button ${ad_active} ad`}>ad</span>
+            <span className={`small-button ${ref_active} references`}>ref</span>
         </div>
     )
 }
