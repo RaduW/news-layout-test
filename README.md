@@ -4,6 +4,10 @@
 
 This is a testbed for testing various layout strategies for new-web.
 
+To play with the built project go to:
+https://raduw.github.io/news-layout-test/
+
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
