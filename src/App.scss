@@ -125,6 +125,7 @@ $left-panel-width: 20em;
   .sports{
     grid-column-end: span 2;
     grid-row-end: span 2;
+    grid-column-start: 1;
   }
   .important{
     grid-column-end: span 3;

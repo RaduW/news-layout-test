@@ -80,7 +80,7 @@ function GridPanel(props: GridPanelProps) {
 }
 
 function GridItem(props: DisplayElement) {
-    return (<div className={`item ${props.type}`}>
+    return (<div className={`item ${props.type}`} key={props.id}>
         {`${props.id} ${props.type}`}
     </div>)
 }
