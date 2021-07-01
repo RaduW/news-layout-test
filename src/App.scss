@@ -109,6 +109,9 @@ $left-panel-width: 20em;
     grid-row-end: span 2;
   }
   .ad{
+    grid-row-end: span 2;
+    grid-column-start: 2;
+
   }
   .references{
   }
@@ -129,6 +132,7 @@ $left-panel-width: 20em;
   }
   .ad{
     grid-row-end: span 2;
+    grid-column-start: 3;
   }
   .references{
     grid-column-end: span 3;
