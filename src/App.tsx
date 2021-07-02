@@ -14,8 +14,27 @@ interface AppState {
 
 }
 
-function initialAppState(): AppState {
+function getSavedAppState(): AppState | null {
+    const savedStr = window.localStorage.getItem("elements-map")
+    if (savedStr) {
+        try {
+            return JSON.parse(savedStr) as AppState
+        } catch {
+            return null
+        }
+    }
+    return null
+}
 
+function saveAppState(state:AppState) {
+    window.localStorage.setItem("elements-map", JSON.stringify(state))
+}
+
+function initialAppState(): AppState {
+    const savedState = getSavedAppState()
+    if( savedState){
+        return savedState
+    }
     const elements = new Array<DisplayElement>(70).fill({type: "article", id: ""}).map(
         (elm, idx) => {
             return {type: "article", id: `${idx + 1}`} as DisplayElement
@@ -29,11 +48,17 @@ function initialAppState(): AppState {
 
 export function App() {
     const [state, setState]: [AppState, (state: AppState) => void] = useState(initialAppState());
-    const setColumns = (columns: number) => setState({...state, columns})
-    const setElementType=(idx:number, type: ElementType) => {
+    const setColumns = (columns: number) => {
+        const newState =  {...state, columns}
+        saveAppState(newState)
+        setState(newState)
+    }
+    const setElementType = (idx: number, type: ElementType) => {
         let elements = [...state.elements]
-        elements[idx] = { ...elements[idx], type}
-        setState({...state, elements})
+        elements[idx] = {...elements[idx], type}
+        const newState = {...state, elements}
+        saveAppState(newState)
+        setState(newState)
     }
     return (
         <div className="App">
@@ -46,15 +71,15 @@ export function App() {
 
 interface ControlPanelProps {
     elements: DisplayElement[]
-    setElementType: (idx: number, type: ElementType)=>void
+    setElementType: (idx: number, type: ElementType) => void
 }
 
 function ControlPanel(props: ControlPanelProps) {
-    const setElement=(idx:number)=>(type: ElementType)=>{
+    const setElement = (idx: number) => (type: ElementType) => {
         props.setElementType(idx, type)
         //props.elements[idx] = {...props.elements[idx], type}
     }
-    const elements = props.elements.map((elm,idx) =>
+    const elements = props.elements.map((elm, idx) =>
         <ElementController key={idx} elm={elm} setType={setElement(idx)}/>
     )
     return (<div className="ControlPanel">
@@ -118,7 +143,7 @@ function ColumnsButton(props: ColumnsButtonProps) {
 
 interface ElementControllerProps {
     elm: DisplayElement
-    setType: ( elementType: ElementType)=>void
+    setType: (elementType: ElementType) => void
 }
 
 function ElementController(props: ElementControllerProps) {
@@ -129,12 +154,14 @@ function ElementController(props: ElementControllerProps) {
     const ref_active = props.elm.type === 'references' ? "active" : ""
     return (
         <div className='button-container'>
-            <span className="item-name" onClick={(_)=>props.setType("article")}>{props.elm.id}</span>
-            <span className={`small-button ${art_active} article`} onClick={(_)=>props.setType("article")}>art</span>
-            <span className={`small-button ${sp_active} sports`} onClick={(_)=>props.setType("sports")}>sp</span>
-            <span className={`small-button ${imp_active} important`} onClick={(_)=>props.setType("important")}>imp</span>
-            <span className={`small-button ${ad_active} ad`} onClick={(_)=>props.setType("ad")}>ad</span>
-            <span className={`small-button ${ref_active} references`} onClick={(_)=>props.setType("references")}>ref</span>
+            <span className="item-name" onClick={(_) => props.setType("article")}>{props.elm.id}</span>
+            <span className={`small-button ${art_active} article`} onClick={(_) => props.setType("article")}>art</span>
+            <span className={`small-button ${sp_active} sports`} onClick={(_) => props.setType("sports")}>sp</span>
+            <span className={`small-button ${imp_active} important`}
+                  onClick={(_) => props.setType("important")}>imp</span>
+            <span className={`small-button ${ad_active} ad`} onClick={(_) => props.setType("ad")}>ad</span>
+            <span className={`small-button ${ref_active} references`}
+                  onClick={(_) => props.setType("references")}>ref</span>
         </div>
     )
 }
