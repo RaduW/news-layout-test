@@ -12,7 +12,7 @@ publish: build
 	-git commit -m "updated docs"
 	-git push --set-upstream origin gh_pages
 	-git checkout master
-
+	-rm -rf /docs /build
 run:
 	yarn start
 
