@@ -9,13 +9,19 @@ $left-panel-width: 20em;
 }
 
 .Toolbar {
-  grid-column-start: 1;
-  grid-column-end: span 2;
+
 
   display:grid;
-  grid-template-columns: $left-panel-width 1fr 1fr 1fr;
+  grid-template-columns:  1fr 1fr 1fr;
   text-align: center;
   grid-column-gap: 3em;
+}
+
+.Nav {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
 }
 
 .ControlPanel {

@@ -1,5 +1,11 @@
 import React, {useState} from 'react'
 import './App.scss'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 type ElementType = "article" | "sports" | "important" | "ad" | "references"
 
@@ -46,6 +52,10 @@ function initialAppState(): AppState {
     }
 }
 
+function Nav(){
+    return ( <div className='Nav'><span>schema</span><span>sample</span><span>component</span></div>)
+}
+
 export function App() {
     const [state, setState]: [AppState, (state: AppState) => void] = useState(initialAppState());
     const setColumns = (columns: number) => {
@@ -62,6 +72,7 @@ export function App() {
     }
     return (
         <div className="App">
+            <Nav/>
             <Toolbar columns={state.columns} setColumns={setColumns}/>
             <ControlPanel elements={state.elements} setElementType={setElementType}/>
             <GridPanel {...state}/>
@@ -118,7 +129,6 @@ interface ToolbarProps {
 function Toolbar(props: ToolbarProps) {
     return (
         <div className="Toolbar">
-            <span> </span>
             <ColumnsButton num_columns={1} current_setting={props.columns} reset_column={col => props.setColumns(col)}/>
             <ColumnsButton num_columns={2} current_setting={props.columns} reset_column={col => props.setColumns(col)}/>
             <ColumnsButton num_columns={3} current_setting={props.columns} reset_column={col => props.setColumns(col)}/>
